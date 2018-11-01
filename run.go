@@ -12,6 +12,12 @@ func main() {
 	}
 	parser := getParser(reader)
 
-	token, str := parser.scanParser()
-	fmt.Println(token, str)
+	el := SymTableEntry{"hey", 1}
+	symbolTableConstants = insertSort(symbolTableConstants, el)
+	token, str := parser.scanWithoutSpaces()
+	for token != EOF {
+		fmt.Println(token, str)
+		token, str = parser.scanWithoutSpaces()
+	}
+
 }

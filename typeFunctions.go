@@ -3,10 +3,7 @@ package main
 import "unicode"
 
 func isWhitespace(sep rune) bool {
-	if sep == ' ' || sep == '\n' || sep == '\t' {
-		return true
-	}
-	return false
+	return sep == ' ' || sep == '\t' || sep == '\n' || sep == 13
 }
 
 func isLetter(char rune) bool {

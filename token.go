@@ -7,6 +7,7 @@ const (
 	WHITESPACE
 	EOF
 	IDENTIFIER
+	CONSTANT
 
 	//OPERATORS
 	ADD       // +

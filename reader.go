@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
+	"regexp"
 	"strings"
 )
 
@@ -117,5 +119,14 @@ func tokenizeOperator(char rune, scanner *Scanner) (Token, string) {
 			return INVALID, string(char)
 		}
 	}
+	fmt.Println("invalid char case: ", char)
 	return INVALID, string(char)
+}
+
+func verifyNumberConstant(str string) (token Token, lit string) {
+	matched, err := regexp.MatchString(`[0-9]+`, str)
+	if matched && err == nil {
+		return CONSTANT, str
+	}
+	return INVALID, str
 }

@@ -32,7 +32,7 @@ func (scanner *Scanner) scanIdentifier() (token Token, lit string) {
 	for {
 		if char := scanner.read(); char == eof {
 			break
-		} else if !isLetter(char) && !isDigit(char) {
+		} else if isWhitespace(char) {
 			scanner.unread()
 			break
 		} else {
@@ -42,7 +42,7 @@ func (scanner *Scanner) scanIdentifier() (token Token, lit string) {
 	keyWordToken, str := checkKeyword(buffer.String())
 
 	if keyWordToken == 0 && str == "" {
-		return IDENTIFIER, buffer.String()
+		return verifyIdentifierName(buffer.String())
 	}
 
 	return keyWordToken, str
@@ -55,7 +55,7 @@ func (scanner *Scanner) scanNumberConstant() (token Token, lit string) {
 	for {
 		if char := scanner.read(); char == eof {
 			break
-		} else if !isDigit(char) {
+		} else if isWhitespace(char) {
 			scanner.unread()
 			break
 		} else {

@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"regexp"
 	"strings"
@@ -119,14 +118,33 @@ func tokenizeOperator(char rune, scanner *Scanner) (Token, string) {
 			return INVALID, string(char)
 		}
 	}
-	fmt.Println("invalid char case: ", char)
+	panic(getTokenError(string(char)) + "Invalid character!")
 	return INVALID, string(char)
 }
 
 func verifyNumberConstant(str string) (token Token, lit string) {
-	matched, err := regexp.MatchString(`[0-9]+`, str)
+	matched, err := regexp.MatchString(`^[0-9]+$`, str)
 	if matched && err == nil {
 		return CONSTANT, str
 	}
+	panic(getTokenError(str) + "Constant contains invalid characters!")
+	return INVALID, str
+}
+
+func getTokenError(str string) (lit string) {
+	return "Invalid token: " + str + "; "
+}
+
+func verifyIdentifierName(str string) (token Token, lit string) {
+	if len(str) > 8 {
+		panic(getTokenError(str) + "Id length can be at most 8 characters!")
+		return INVALID, str
+	}
+	matched, err := regexp.MatchString(`^[A-Za-z][A-Za-z0-9]*$`, str)
+
+	if matched && err == nil {
+		return IDENTIFIER, str
+	}
+	panic(getTokenError(str) + "Id contains invalid characters!")
 	return INVALID, str
 }

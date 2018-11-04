@@ -1,0 +1,23 @@
+Formal Languages - Scanner Documentation
+
+The scanner parses the input file rune by rune, ignoring whitespace and newline 
+and stopping when it encounters end of file. 
+
+The scanner converts the resulting literals into the corresponding Token. Each token has 
+a corresponding int value which identifies it uniquely, found in token.go.
+The parsers is currently just a wrapper over the scanner and will probably be extended in 
+future assignments.
+
+Each obtained token is also stored in the PIF and/or Symbol tables. The tables themselves
+are represented as simple lists of objects. The tokens stored in PIF use the unique identifiers
+corresponding to the respective token. The 2 symbol tables are also lists of objects. However,
+when inserting constants and identifiers, the function ensures that the lists will also remain
+sorted lexicographically.
+
+Errors in the program are treated with the panic mechanism and usually arise when a token is
+categorized as INVALID (id 0) or if an identifier exceeds length 8 as stated in the assignment 
+requirement. A number constant is valid if it contains only digits and an identifier is valid
+if it contains only digits, lowercase and uppercase letters and if it starts with a letter.
+These constraints are checked with the corresponding regular expression.
+
+

@@ -32,7 +32,7 @@ func (scanner *Scanner) scanIdentifier() (token Token, lit string) {
 	for {
 		if char := scanner.read(); char == eof {
 			break
-		} else if isWhitespace(char) {
+		} else if isWhitespace(char) || (!isLetter(char) && !isDigit(char)) {
 			scanner.unread()
 			break
 		} else {
